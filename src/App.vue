@@ -1,26 +1,22 @@
 <template>
-  <add-book-item
-    @add-book-event="AddBookItem"
-    @edit-book-event="editBookItemEvent"
-    :editBook="editBook"
-  />
-  <books
-    :books="books"
-    @del-book-event="deleteBookItem"
-    @edit-book-event="editBookItem"
-  />
+  <div v-for="(c, i) in company" :key="i" class="centering-div">
+    <div class="card">
+      <img
+        src="https://www.w3schools.com/w3images/jeans3.jpg"
+        alt="Denim Jeans"
+        style="width: 100%"
+      />
+      <h1>{{ c.name }}</h1>
+      <p class="price">{{ c.username }}</p>
+      <p>{{ c.company.catchPhrase }}</p>
+      <p><button>Add to Cart</button></p>
+    </div>
+  </div>
 </template>
 
 <script>
-import AddBookItem from "./components/AddBookItem.vue";
-import Books from "./components/Books.vue";
-
 export default {
   name: "App",
-  components: {
-    Books,
-    AddBookItem,
-  },
   data() {
     return {
       books: [
@@ -37,6 +33,7 @@ export default {
         title: "",
         id: "",
       },
+      company: {},
     };
   },
   methods: {
@@ -55,11 +52,31 @@ export default {
       let objIndex = this.books.findIndex((obj) => obj.id === bookItem.id);
       this.books[objIndex].title = bookItem.title;
     },
+    getCompany() {
+      console.log("jalan");
+      let option = {
+        methods: "GET",
+        headers: {
+          Authorization:
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiZWFyZXIiLCJzdWIiOjIsImlhdCI6MTY4NzA4MjgzMCwiZXhwIjoxNjg3MTY5MjMwLCJyb2xlIjoyfQ.GSIcljIa0zraSum_WvSew8-ynfNOAQsNJSCpLdk9ebE",
+        },
+      };
+      fetch("https://jsonplaceholder.typicode.com/users", option)
+        .then(function (res) {
+          return res.json();
+        })
+        .then((resJson) => {
+          let vm = this;
+          vm.company = resJson;
+          console.log(vm.company);
+        });
+    },
   },
   mounted() {
     if (localStorage.getItem("books")) {
       this.books = JSON.parse(localStorage.getItem("books"));
     }
+    this.getCompany();
   },
   watch: {
     books: {
@@ -84,5 +101,42 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+.centering-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 </style>
