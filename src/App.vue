@@ -54,14 +54,7 @@ export default {
     },
     getCompany() {
       console.log("jalan");
-      let option = {
-        methods: "GET",
-        headers: {
-          Authorization:
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiZWFyZXIiLCJzdWIiOjIsImlhdCI6MTY4NzA4MjgzMCwiZXhwIjoxNjg3MTY5MjMwLCJyb2xlIjoyfQ.GSIcljIa0zraSum_WvSew8-ynfNOAQsNJSCpLdk9ebE",
-        },
-      };
-      fetch("https://jsonplaceholder.typicode.com/users", option)
+      fetch("https://jsonplaceholder.typicode.com/users")
         .then(function (res) {
           return res.json();
         })
