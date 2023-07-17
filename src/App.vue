@@ -1,6 +1,6 @@
 <template>
-  <div v-for="(c, i) in company" :key="i" class="centering-div">
-    <div class="card">
+  <div class="centering-div">
+    <div class="card" v-for="(c, i) in company" :key="i">
       <img
         src="https://www.w3schools.com/w3images/jeans3.jpg"
         alt="Denim Jeans"
